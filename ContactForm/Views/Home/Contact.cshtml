@@ -1,0 +1,191 @@
+﻿
+@{
+    ViewData["Title"] = "Contact";
+}
+
+
+<h3 id="Thanksmessage"></h3>
+<h3 id="Pleasemessage"></h3>
+<input type="hidden" id="someName" value="@ViewBag.Message" />
+
+
+
+
+<form id="contact-form" asp-controller="Home" asp-action="Contact" method="post">
+    <h1 class="title">Contact us!</h1>
+
+    <div class="container">
+        <div class="contact-form row">
+            <div class="form-field">
+                <input id="FullName" class="input-text" type="text" name="FullName">
+                <label for="FullName" class="label">Fullname</label> 
+                
+            </div>
+            <div class="form-field col-lg-6">
+                <input id="phone" class="input-text" type="text" name="Phone">
+                <label for="phone" class="label">Phone</label> 
+            </div>
+            <div class="form-field col-lg-6">
+                <input id="Email" name="Email" class="input-text" type="email">
+                <label for="Email" class="label">E-mail</label>
+            </div>
+
+            <div class="form-field col-lg-12">
+         
+                <textarea id="Message" name="Message" class="input-text"></textarea>
+                <label for="Message" class="label">Message</label>
+                
+            </div>
+
+            <div class="form-field col-lg-12">
+                
+                <input id="submit" type="submit" value="Send" name="">
+            </div>
+    </div>
+    
+    
+   
+   
+  
+
+
+</form>
+
+
+<script>
+
+
+
+
+    let FullName = document.querySelector("#FullName");
+    let Message = document.querySelector("#Message");
+    let button = document.querySelector("#submit");
+    let contact = document.querySelector("#som");
+
+    console.log(new String(FullName.value).length);
+
+
+    function validationUser() {
+        var field1 = new String(FullName.value);
+        var field2 = new String(Message.value);
+        console.log(document.querySelector("h1").value);
+        if (field1.length == 0) {
+            FullName.setCustomValidity("You left Fullname field empty");
+            FullName.reportValidity();
+        } else if (field2.length == 0) {
+            Message.setCustomValidity("You left Message field empty");
+            Message.reportValidity();
+
+        } else {
+
+
+             document.getElementById("Pleasemessage").innerHTML = "Please wait...";
+
+
+
+        }
+
+
+
+
+    }
+
+
+    //TRIED DIFFERENT WAYS WITH AJAX AND JQUERY BUT I WAS FACING PROBLEMS EITHER IN MESSAGE ERRORS(RULES DIDNT APPLY FOR SOME REASON)
+    //OR SOME SYSTEM.IO ERRORS EVEN IF THE RECORDS WERE WRITTEN IN THE FILES 
+
+    /*$(document).ready(function () {
+        console.log("hey");
+        // Initialize form validation on the registration form.
+        // It has the name attribute "registration"
+        $("#contact-form").validate({
+
+            // Specify validation rules
+            rules: {
+
+                FullName: "required",
+                Message: "required"
+
+            },
+
+            messages: {
+                FullName: "Empty field"  // <- "user_name" must be the NAME attribute
+            },
+
+
+
+
+ 
+            submitHandler: function (form) {
+                var valdata = form.serialize()
+                $.ajax({
+                    url: "/Home/Contact",
+                    type: "POST",
+                    dataType: 'json',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    data: valdata
+                });
+
+
+                /* document.getElementById("Thanksmessage").value = "Thank you for your request. We will get back to you asap.";
+                 console.log("kalimera");
+                 console.log(document.getElementById("Thanksmessage").value);
+
+                 if (response == "OK") {
+                        console.log("ok");
+                        document.getElementById("contact-form").hidden = true;
+                        document.getElementById("Thanksmessage").innerHTML = "Thank you for your request. We will get back to you asap.";
+                        document.getElementById("Pleasemessage").innerHTML = "";
+
+
+                 }
+            }
+        });
+    });
+
+
+
+    */
+
+    /*
+    $(document).ready(function () {
+        $("#submit").click(function (e) {
+            //Serialize the form datas.
+            document.getElementById("Pleasemessage").innerHTML = "Please wait...";
+            var valdata = $("#contact-form").serialize();
+            //to get alert popup
+            $.ajax({
+                url: "/Home/Contact",
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: valdata
+            });
+
+
+
+        });
+    });
+    */
+
+
+
+
+      var response = "@ViewBag.Message";
+            document.getElementById("Thanksmessage").value = "Thank you for your request. We will get back to you asap.";
+            console.log("kalimera");
+            console.log(document.getElementById("Thanksmessage").value);
+
+                if (response == "OK") {
+                    console.log("ok");
+                    document.getElementById("contact-form").hidden = true;
+                    document.getElementById("Thanksmessage").innerHTML = "Thank you for your request. We will get back to you asap.";
+                    document.getElementById("Pleasemessage").innerHTML = "";
+
+
+                }
+
+
+         button.addEventListener("click", validationUser);
+
+</script>
